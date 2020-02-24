@@ -1,0 +1,38 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'drivers',~{::script})}">
+
+<body>
+<h2 th:inline="text">
+    <i class="fas fa-user"></i>
+    [[#{page.title.drivers}]]
+</h2>
+<a class="btn btn-outline-primary mb-2" role="button" th:href="@{/drivers/new}" th:text="#{action.driver.new}"></a>
+
+<table class="table table-hover" id="table-drivers">
+    <caption>
+        <div th:replace="~{fragments/tableNavigation :: paginated ('/drivers')}"></div>
+    </caption>
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col" th:text="#{form.driver.name}" class="w-100">Full name</th>
+        <th scope="col" th:text="#{form.driver.license}">License</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="driver : ${page}" th:attr="data-id=${driver.id}">
+        <td th:text="${driver.fullName}">Full name</td>
+        <td th:text="${driver.license}">License</td>
+        <td th:replace="fragments/tableActions :: actions"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+
+<script>
+    $(document).ready(function () {
+        new uster.ActionTable('#table-drivers', {path: '/drivers'});
+    });
+</script>
+
+</html>

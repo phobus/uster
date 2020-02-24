@@ -1,0 +1,42 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'vehicles',~{::script})}">
+
+<body>
+<h2 th:inline="text">
+    <i class="fas fa-car-side"></i>
+    [[#{page.title.vehicles}]]
+</h2>
+<a class="btn btn-outline-primary mb-2" role="button" th:href="@{/vehicles/new}" th:text="#{action.vehicle.new}"></a>
+
+<table class="table table-hover" id="table-vehicles">
+    <caption>
+        <div th:replace="~{fragments/tableNavigation :: paginated ('/vehicles')}"></div>
+    </caption>
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col" th:text="#{form.vehicle.brand}">Brand</th>
+        <th scope="col" th:text="#{form.vehicle.model}">Model</th>
+        <th scope="col" th:text="#{form.vehicle.plate}">Plate</th>
+        <th scope="col" th:text="#{form.vehicle.licenseRequired}">License required</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="vehicle : ${page}" th:attr="data-id=${vehicle.id}">
+        <td th:text="${vehicle.brand}" class="w-25">Brand</td>
+        <td th:text="${vehicle.model}" class="w-25">Model</td>
+        <td th:text="${vehicle.plate}" class="w-25">Plate</td>
+        <td th:text="${vehicle.licenseRequired}" class="w-25">License required</td>
+        <td th:replace="fragments/tableActions :: actions"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+
+<script>
+    $(document).ready(function () {
+        var table = new uster.ActionTable('#table-vehicles', {path: '/vehicles'});
+    });
+</script>
+
+</html>

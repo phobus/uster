@@ -1,0 +1,25 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'drivers',~{::script})}">
+
+<body>
+
+<h2 th:inline="text">
+    <i class="fas fa-user"></i>
+    [[#{page.title.drivers}]]
+</h2>
+
+<form th:object="${driver}" method="post">
+    <input th:replace="~{fragments/inputField :: input (#{form.driver.name}, 'name', 'text')}"/>
+    <input th:replace="~{fragments/inputField :: input (#{form.driver.surname}, 'surname', 'text')}"/>
+    <input th:replace="~{fragments/inputField :: input (#{form.driver.license}, 'license', 'text')}"/>
+
+    <div class="form-group">
+        <div th:replace="fragments/formButtons :: buttons('/drivers')"></div>
+    </div>
+</form>
+
+</body>
+
+<script></script>
+
+</html>

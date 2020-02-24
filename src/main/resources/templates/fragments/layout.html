@@ -1,0 +1,93 @@
+<!doctype html>
+<!--lang="en"-->
+<html th:fragment="layout (template, menu, script)">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/font-awesome/css/fontawesome.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/font-awesome/css/solid.min.css}">
+    <link rel="stylesheet" th:href="@{/css/uster.css}"/>
+    <title>Uster vehicle reservation</title>
+</head>
+<body>
+
+<header>
+    <div class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            <!-- title -->
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-route"></i>
+                <strong>Uster</strong>
+            </a>
+
+            <!-- collapse button -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- navbar -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                    <!-- menuItem fragment -->
+                    <li th:fragment="menuItem (path,active,title,glyph,text)" class="nav-item"
+                        th:classappend="${active==menu ? 'active' : ''}">
+                        <a class="nav-link" th:href="@{__${path}__}" th:title="${title}">
+                            <i th:class="'fas fa-'+${glyph}" class="fas fa-home"></i>
+                            <span th:inline="text">[[${text}]] <span th:if="${active==menu}"
+                                                                     class="sr-only">(current)</span></span>
+                        </a>
+                    </li>
+
+                    <li th:replace="::menuItem ('/','home',#{page.nav.home.title},'home',#{page.nav.home})">
+                        <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                        <span>Home</span>
+                    </li>
+
+                    <li th:replace="::menuItem ('/drivers','drivers',#{page.nav.drivers.title},'user',#{page.nav.drivers})">
+                        <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                        <span>Drivers</span>
+                    </li>
+
+                    <li th:replace="::menuItem ('/vehicles','vehicles',#{page.nav.vehicles.title},'car-side',#{page.nav.vehicles})">
+                        <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                        <span>Cars</span>
+                    </li>
+
+                    <li th:replace="::menuItem ('/trips','trips',#{page.nav.trips.title},'map-marked',#{page.nav.trips})">
+                        <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                        <span>Trips</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="container mt-5">
+        <th:block th:include="${template}"/>
+        <hr />
+    </div>
+</main>
+
+<footer class="container mt-5">
+    <p>© Company 2019</p>
+</footer>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+<script th:src="@{/js/postForm.js}"></script>
+<script th:src="@{/js/actionTable.js}"></script>
+<script th:src="@{/js/selectTable.js}"></script>
+
+<th:block th:insert="${script}"/>
+
+</body>
+</html>
+

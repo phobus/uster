@@ -1,0 +1,7 @@
+.action-table tbody tr, .select-table tbody tr {
+    cursor: pointer;
+}
+
+table .action-edit, table .action-delete {
+    padding: .1rem .4rem;
+}

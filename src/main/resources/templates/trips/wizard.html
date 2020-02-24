@@ -1,0 +1,107 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'trips',~{::script})}">
+
+<body>
+<h2 th:inline="text">
+    <i class="fas fa-map-marked"></i>
+    [[#{page.title.trips}]]
+</h2>
+
+<!-- date -->
+<div class="card mb-4" th:if="${step.ordinal() == 0}">
+    <h5 class="card-header" th:text="#{wizard.trip.dateSelection}">Trip date selection</h5>
+    <div class="card-body">
+        <form th:object="${trip}" method="post" th:action="@{/trips/date}">
+            <input th:replace="~{fragments/inputField :: input (#{form.travel.date}, 'date', 'date')}"/>
+            <button type="submit" class="btn btn-primary float-right"
+                    th:text="#{wizard.trip.findVehicles}">Find free vehicles</button>
+        </form>
+    </div>
+</div>
+
+<div class="card mb-4" th:if="${step.ordinal() > 0}">
+    <h5 class="card-header" th:text="#{wizard.trip.date}">Trip date</h5>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-2" th:text="#{form.travel.date}">Date</div>
+            <div class="col-sm-10" th:text="${trip.date}"></div>
+        </div>
+    </div>
+</div>
+
+<!-- vehicle -->
+<div class="card mb-4" th:if="${step.ordinal() >= 1}">
+    <h5 class="card-header" th:text="#{wizard.trip.vehicleSelection}">Free vehicle selection</h5>
+    <div class="card-body">
+        <table class="table table-sm table-hover" id="table-select-vehicle">
+            <thead>
+            <tr>
+                <th></th>
+                <th scope="col" th:text="#{form.vehicle.brand}">Brand</th>
+                <th scope="col" th:text="#{form.vehicle.model}">Model</th>
+                <th scope="col" th:text="#{form.vehicle.plate}">Plate</th>
+                <th scope="col" th:text="#{form.vehicle.licenseRequired}">License required</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="vehicle : ${vehicles}"
+                th:attr="data-id=${vehicle.id}"
+                th:classappend="${vehicle.id==trip.vehicle?.id ? 'table-primary' : ''}">
+                <td>
+                    <input th:if="${vehicle.id==trip?.vehicle?.id}" type="checkbox" checked />
+                    <input th:unless="${vehicle.id==trip?.vehicle?.id}" type="checkbox" />
+                </td>
+                <td th:text="${vehicle.brand}" class="w-25">Brand</td>
+                <td th:text="${vehicle.model}" class="w-25">Model</td>
+                <td th:text="${vehicle.plate}" class="w-25">Plate</td>
+                <td th:text="${vehicle.licenseRequired}" class="w-25">License required</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- date -->
+<div class="card mb-4" th:if="${step.ordinal() >= 2}">
+    <h5 class="card-header">Free drivers selection</h5>
+    <div class="card-body">
+        <table class="table table-sm table-hover" id="table-select-driver">
+            <thead>
+            <tr>
+                <th></th>
+                <th scope="col" th:text="#{form.driver.name}" class="w-100">Name</th>
+                <th scope="col" th:text="#{form.driver.license}">License</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="driver : ${drivers}"
+                th:attr="data-id=${driver.id}"
+                th:classappend="${driver.id==trip?.driver?.id ? 'table-primary' : ''}">
+                <td>
+                    <input th:if="${driver.id==trip?.driver?.id}" type="checkbox" checked />
+                    <input th:unless="${driver.id==trip?.driver?.id}" type="checkbox" />
+                </td>
+                <td th:text="${driver.fullName}">fullName</td>
+                <td th:text="${driver.license}">License</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<form th:object="${trip}" method="post"  th:action="@{/trips/new}">
+    <a role="button" class="btn btn-outline-primary" th:href="@{/trips}" th:text="#{action.back}">Back</a>
+    <a role="button" class="btn btn-outline-primary" th:href="@{/trips/wizard}" th:text="#{action.reset}">Reset</a>
+    <button th:if="${step.ordinal() == 3}"
+            type="submit" class="btn btn-primary float-right" th:text="#{action.save}">Save</button>
+</form>
+
+</body>
+<script>
+    $(document).ready(function () {
+        new uster.SelectTable('#table-select-vehicle', {path: '/trips/vehicle'});
+        new uster.SelectTable('#table-select-driver', {path: '/trips/driver'});
+    });
+</script>
+
+</html>

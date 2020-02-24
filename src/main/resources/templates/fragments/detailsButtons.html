@@ -1,0 +1,11 @@
+<html>
+<body>
+<th:block th:fragment="buttons (path, id)">
+    <a role="button" class="btn btn-outline-primary mb-2"
+       th:href="@{${path}}" th:text="#{action.back}">Back</a>
+    <a role="button" class="btn btn-outline-primary mb-2"
+       th:href="@{${path} + '/{id}/edit'(id=${id})}"><i class="fas fa-edit"></i>
+    </a>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'drivers',~{::script})}">
+
+<body>
+<h2 th:inline="text">
+    <i class="fas fa-user"></i>
+    [[#{page.title.drivers}]]
+</h2>
+<table class="table table-striped" th:object="${driver}">
+    <tr>
+        <th th:text="#{form.driver.name}">Name</th>
+        <td th:text="*{name}"></td>
+    </tr>
+    <tr>
+        <th th:text="#{form.driver.surname}">Surname</th>
+        <td th:text="*{surname}"></td>
+    </tr>
+    <tr>
+        <th th:text="#{form.driver.license}">license</th>
+        <td th:text="*{license}"></td>
+    </tr>
+</table>
+
+<div th:replace="fragments/detailsButtons :: buttons('/drivers', ${driver.id})"></div>
+
+</body>
+
+<script></script>
+
+</html>

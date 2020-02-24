@@ -1,0 +1,38 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'trips',~{::script})}">
+
+<body>
+<h2 th:inline="text">
+    <i class="fas fa-map-marked"></i>
+    [[#{page.title.trips}]]
+</h2>
+<a class="btn btn-outline-primary mb-2" role="button" th:href="@{/trips/wizard}" th:text="#{action.trip.new}"></a>
+
+<table class="table" id="table-drivers">
+    <caption>
+        <div th:replace="~{fragments/tableNavigation :: paginated ('/trips')}"></div>
+    </caption>
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col" th:text="#{form.travel.date}">Date</th>
+        <th scope="col" th:text="#{form.travel.driver}">Driver</th>
+        <th scope="col" th:text="#{form.travel.license}">License</th>
+        <th scope="col" th:text="#{form.travel.vehicle}">Brand</th>
+        <th scope="col" th:text="#{form.travel.plate}">Plate</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="trip : ${page}" th:attr="data-id=${trip.id}">
+        <td th:text="${trip.date}">Date</td>
+        <td th:text="${trip.driver.fullName}">FullName</td>
+        <td th:text="${trip.vehicle.licenseRequired}">License</td>
+        <td th:text="${trip.vehicle.branModel}">Brand, model</td>
+        <td th:text="${trip.vehicle.plate}">Plate</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+
+<script></script>
+
+</html>

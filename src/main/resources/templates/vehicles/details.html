@@ -1,0 +1,34 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'vehicles',~{::script})}">
+
+<body>
+<h2 th:inline="text">
+    <i class="fas fa-car-side"></i>
+    [[#{page.title.vehicles}]]
+</h2>
+<table class="table table-striped" th:object="${vehicle}">
+    <tr>
+        <th th:text="#{form.vehicle.brand}">Brand</th>
+        <td th:text="*{brand}"></td>
+    </tr>
+    <tr>
+        <th th:text="#{form.vehicle.model}">Model</th>
+        <td th:text="*{model}"></td>
+    </tr>
+    <tr>
+        <th th:text="#{form.vehicle.plate}">Plate</th>
+        <td th:text="*{plate}"></td>
+    </tr>
+    <tr>
+        <th th:text="#{form.vehicle.licenseRequired}">License Required</th>
+        <td th:text="*{licenseRequired}"></td>
+    </tr>
+</table>
+
+<div th:replace="fragments/detailsButtons :: buttons('/vehicles', ${vehicle.id})"></div>
+
+</body>
+
+<script></script>
+
+</html>

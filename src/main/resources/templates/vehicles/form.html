@@ -1,0 +1,25 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'vehicles',~{::script})}">
+
+<body>
+
+<h2 th:inline="text">
+    <i class="fas fa-car-side"></i>
+    [[#{page.title.vehicles}]]
+</h2>
+<form th:object="${vehicle}" method="post">
+    <input th:replace="~{fragments/inputField :: input (#{form.vehicle.brand}, 'brand', 'text')}"/>
+    <input th:replace="~{fragments/inputField :: input (#{form.vehicle.model}, 'model', 'text')}"/>
+    <input th:replace="~{fragments/inputField :: input (#{form.vehicle.plate}, 'plate', 'text')}"/>
+    <input th:replace="~{fragments/inputField :: input (#{form.vehicle.licenseRequired}, 'licenseRequired', 'text')}"/>
+
+    <div class="form-group">
+        <div th:replace="fragments/formButtons :: buttons('/vehicles')"></div>
+    </div>
+</form>
+
+</body>
+
+<script></script>
+
+</html>
